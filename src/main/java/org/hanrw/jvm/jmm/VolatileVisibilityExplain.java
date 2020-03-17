@@ -28,7 +28,7 @@ public class VolatileVisibilityExplain {
     /*
     开始监控共享变量
     */
-    explain.threadB.start();
+    explain.threadB1.start();
     Thread.sleep(500);
     /*
     开始修改共享变量
@@ -48,7 +48,28 @@ public class VolatileVisibilityExplain {
   Thread threadB =
       new Thread(
           () -> {
+            /*
+            空跑一直占用cpu使用权,不会进行上下文切换
+             */
             while (!currentState) {
+            }
+            System.out.println("监控到共享变量的值已经被修改了");
+          });
+
+  Object object = new Object();
+  /** 线程B监视共享变量的值 */
+  Thread threadB1 =
+      new Thread(
+          () -> {
+            /*
+            由于加了同步块,那么线程会出现上下文切换
+            所以不使用volatile关键字也会重新从内存里面读取新的值
+            所以会打印"监控到共享变量的值已经被修改了"
+             */
+            while (!currentState) {
+              synchronized (object){
+
+              }
             }
             System.out.println("监控到共享变量的值已经被修改了");
           });
