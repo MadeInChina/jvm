@@ -10,11 +10,15 @@ public class VolatileVisibilityExplain {
   /*
   没有加volatile关键字的线程共享变量
   不会打印->"监控到共享变量的值已经被修改了"
+  原因是因为A线程和B线程分别使用工作内存
+  两个线程之前操作动作不可见
   */
   //  public Boolean currentState = false;
   /*
   加volatile关键字的线程共享变量
   会打印->"监控到共享变量的值已经被修改了"
+  原因是因为volatile关键字语义上使得两个线程之前的操作可见
+  会强制把工作内存刷入到主内存
   */
   public volatile Boolean currentState = false;
 
