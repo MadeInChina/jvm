@@ -19,6 +19,9 @@ public class VolatileVisibilityExplain {
   会打印->"监控到共享变量的值已经被修改了"
   原因是因为volatile关键字语义上使得两个线程之前的操作可见
   会强制把工作内存刷入到主内存
+  汇编代码查看
+  -XX:+UnlockDiagnosticVMOptions -XX:+PrintAssembly -Xcomp
+
   */
   public volatile Boolean currentState = false;
 
